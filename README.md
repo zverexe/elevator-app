@@ -7,3 +7,5 @@ To run project locally you need:
 3) npm i
 4) npm start, project will start on http://localhost:3000/
 5) to run test, run command npm test
+
+Also, you can check live app on https://elevator-test.herokuapp.com/
