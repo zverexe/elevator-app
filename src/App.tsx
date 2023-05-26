@@ -1,25 +1,33 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import '@fortawesome/fontawesome-free/css/all.min.css';
+import { ThemeProvider, Button, Flex } from 'theme-ui';
+import { ElevatorProvider } from './providers';
+import { ElevatorContainer } from './components/ElevatorContainer';
+import React, { useState } from 'react';
+import { theme } from './theme/theme';
+
+type TBuilding = {
+  id: number;
+};
 
 function App() {
+  const [buildings, addBuilding] = useState<Array<TBuilding>>([]);
+  const handleAddBuilding = React.useCallback(
+    () => addBuilding((oldBuildings) => [...oldBuildings, { id: oldBuildings.length + 1 }]),
+    [],
+  );
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ThemeProvider theme={theme}>
+      {buildings.map((building) => (
+        <ElevatorProvider key={building.id}>
+          <ElevatorContainer />
+        </ElevatorProvider>
+      ))}
+      <Flex sx={{ flex: '1', justifyContent: 'center' }} mt={buildings.length ? 100 : 250}>
+        <Button backgroundColor="secondary" onClick={handleAddBuilding}>
+          Add Building
+        </Button>
+      </Flex>
+    </ThemeProvider>
   );
 }
 
